@@ -27,7 +27,7 @@ export default function Navbar() {
         <Link to="/products/new" className="text-2xl">
           <BsFillPencilFill />
         </Link>
-        {user ? <User user={user} /> : null}
+        {user && <User user={user} />}
         {user ? <button onClick={logout}>Logout</button> : <button onClick={login}>Login</button>}
       </nav>
     </header>
