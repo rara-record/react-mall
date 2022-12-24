@@ -21,6 +21,9 @@ export const logout = () => {
   signOut(auth).catch(console.error)
 }
 
+/**
+ * @description 사용자의 상태 정보를 구독하는 함수
+ */
 export const onUserStateChange = (callback) => {
   onAuthStateChanged(auth, async (user) => {
     console.log(user)
