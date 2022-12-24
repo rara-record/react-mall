@@ -4,7 +4,7 @@
   "useTabs": false,
   "semi": false,
   "singleQuote": true,
-  "printWidth": 250,
+  "printWidth": 120,
   "arrowParens": "always",
   "endOfLine": "auto"
 }
