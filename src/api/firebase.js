@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
+import { v4 as uuid } from 'uuid'
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth'
-import { getDatabase, get, ref, onValue } from 'firebase/database'
+import { getDatabase, get, set, ref } from 'firebase/database'
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -47,4 +48,21 @@ const adminUser = async (user) => {
       }
       return user
     })
+}
+
+/**
+ * @description firebase database에 제품을 추가하는 함수
+ * @param product
+ * @param image
+ * @returns {Promise<void>}
+ */
+export const addNewProduct = async (product, image) => {
+  const id = uuid()
+  await set(ref(db, `products/${id}`), {
+    ...product,
+    id,
+    image,
+    price: parseInt(product.price),
+    options: product.options.split(','), // 배열로 저장
+  })
 }
