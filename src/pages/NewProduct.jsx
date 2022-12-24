@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../components/UI/Button'
+import { uploadImage } from '../api/uploader'
 
 export default function NewProduct() {
   const [product, setProduct] = useState({})
@@ -14,11 +15,15 @@ export default function NewProduct() {
     }
     setProduct((product) => ({ ...product, [name]: value }))
   }
-  const onSubmit = (e) => {}
+  const onSubmit = (e) => {
+    e.preventDefault()
+    uploadImage(file).then((url) => console.log('imageupload', url))
+  }
 
   return (
     <section>
       <h2>새로운 제품 등록</h2>
+      {file && <img src={URL.createObjectURL(file)} alt="local file" />}
       <form onSubmit={onSubmit}>
         <input type="file" accept="image/*" name="file" required onChange={onChangeInput} />
         <input
