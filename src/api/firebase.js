@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import { v4 as uuid } from 'uuid'
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'firebase/auth'
-import { getDatabase, get, set, ref } from 'firebase/database'
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
+import { get, getDatabase, ref, set } from 'firebase/database'
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -28,6 +29,7 @@ export const logout = () => {
 export const onUserStateChange = (callback) => {
   onAuthStateChanged(auth, async (user) => {
     const updatedUser = user ? await adminUser(user) : null
+    console.log(updatedUser)
     callback(updatedUser)
   })
 }
@@ -65,4 +67,18 @@ export const addNewProduct = async (product, image) => {
     price: parseInt(product.price),
     options: product.options.split(','), // 배열로 저장
   })
+}
+
+/**
+ * @description firebase database에서 product data를 가져오는 함수
+ * @returns {Promise<DataSnapshot>}
+ */
+export const getProducts = async () => {
+  return get(ref(db, 'products')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return Object.values(snapshot.val())
+      }
+      return []
+    })
 }
