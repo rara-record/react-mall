@@ -1,5 +1,14 @@
-import React from 'react';
+import React from 'react'
+import AllProducts from './AllProducts'
+import Banner from '../components/Banner'
 
-export default function Home() {
-  return <div>Home</div>;
+const Home = () => {
+  return (
+    <>
+      <Banner />
+      <AllProducts />
+    </>
+  )
 }
+
+export default Home
